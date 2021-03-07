@@ -1,13 +1,23 @@
 #!/usr/bin/env python3
 
+"""
+Code to determine what percentage of dates are "special", when written out in MM/DD/YY (or DD/MM/YY) then the first two multiplied give the third)
+"""
+
 import unittest
 from datetime import datetime, timedelta
 
 def is_date_special(date):
+    """
+    Is this particular date special
+    """
     return date.day * date.month == date.year % 100
 
 
 def run_tests():
+    """
+    Run some tests to make sure the special date code is accurate
+    """
 
     class Tester(unittest.TestCase):
 
@@ -26,10 +36,15 @@ def run_tests():
     unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(Tester))
 
 def get_percentage():
+    """
+    What percentage of all dates are "special"
+    """
+    
     total_days = 0
     special_days = 0
     date = datetime(year=2000, month=1, day=1)
-    enddate = datetime(year=2100, month=1, day=1)
+    # Assuming periodicity of 400 years, which is the longest period in determiniation of leap years
+    enddate = datetime(year=2400, month=1, day=1)
     while date < enddate:
         date = date + timedelta(days=1)
         if is_date_special(date):
